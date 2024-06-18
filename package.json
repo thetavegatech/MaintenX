@@ -19,7 +19,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "install": "npm install --legacy-peer-deps"
   },
   "dependencies": {
     "@blackbox-vision/react-qr-reader": "^5.0.0",
@@ -76,5 +77,8 @@
   "engines": {
     "node": ">=10",
     "npm": ">=6"
+  },
+  "resolutions": {
+    "react": "^17.0.2"
   }
 }
