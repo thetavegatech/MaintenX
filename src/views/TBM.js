@@ -4,7 +4,9 @@ import { NavLink } from 'react-router-dom'
 import { CTable, CTableHead, CButton } from '@coreui/react'
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
-// import QrReader from 'react-qr-reader'
+import './assetTable/asset.css'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const TbmTable = () => {
   const [tbms, setTbms] = useState([])
@@ -180,95 +182,99 @@ const TbmTable = () => {
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      <CTable bordered striped hover responsive>
-        <CTableHead color="dark">
-          <tr>
-            <th style={{ textAlign: 'center' }}>Sr No</th>
-            <th style={{ textAlign: 'center' }}>Asset Name</th>
-            <th style={{ textAlign: 'center' }}>Location</th>
-            {/* <th style={{ textAlign: 'center' }}>Asset Type</th> */}
-            <th style={{ textAlign: 'center' }}>Installation Date</th>
-            <th style={{ textAlign: 'center' }}>TBM Schedule Date</th>
-            <th style={{ textAlign: 'center' }}>TBM Frequency</th>
-            <th style={{ textAlign: 'center' }}>Next TBM Date</th>
-            <th style={{ textAlign: 'center' }}>Status</th>
-            {/* <th style={{ textAlign: 'center' }}>QR Code</th> */}
-            <th style={{ textAlign: 'center' }}>Edit</th>
-            <th style={{ textAlign: 'center' }}>Delete</th>
-          </tr>
-        </CTableHead>
-        <tbody>
-          {loading ? (
-            <tr>
-              <td colSpan="12" style={{ textAlign: 'center' }}>
-                <p>Loading...</p>
-              </td>
-            </tr>
-          ) : (
-            <>
-              {message && (
-                <tr>
-                  <td
-                    colSpan="12"
-                    style={{ textAlign: 'center', fontStyle: 'italic', color: 'red' }}
-                  >
-                    {message}
-                  </td>
-                </tr>
-              )}
-              {filteredTbms.map((tbm, index) => (
-                <tr key={tbm._id}>
-                  <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                  <td style={{ textAlign: 'center' }}>{tbm.assetName}</td>
-                  <td style={{ textAlign: 'center' }}>{tbm.location}</td>
-                  {/* <td style={{ textAlign: 'center' }}>{tbm.assetType}</td> */}
-                  <td style={{ textAlign: 'center' }}>
+      <div className="table-container">
+        <Table className="custom-table">
+          <Thead style={{ backgroundColor: '#000026', color: 'white' }}>
+            <Tr>
+              <Th style={{ textAlign: 'center', height: '40px' }}>Sr No</Th>
+              <Th style={{ textAlign: 'center' }}>Asset Name</Th>
+              <Th style={{ textAlign: 'center' }}>Location</Th>
+              {/* <th style={{ textAlign: 'center' }}>Asset Type</th> */}
+              {/* <Th style={{ textAlign: 'center' }}>Installation Date</Th> */}
+              <Th style={{ textAlign: 'center' }}>TBM Schedule Date</Th>
+              <Th></Th>
+              <Th style={{ textAlign: 'center' }}>TBM Frequency</Th>
+              <Th style={{ textAlign: 'center' }}>Next TBM Date</Th>
+              <Th style={{ textAlign: 'center' }}>Status</Th>
+              {/* <th style={{ textAlign: 'center' }}>QR Code</th> */}
+              <Th style={{ textAlign: 'center' }}>Edit</Th>
+              <Th style={{ textAlign: 'center' }}>Delete</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="12" style={{ textAlign: 'center' }}>
+                  <p>Loading...</p>
+                </td>
+              </tr>
+            ) : (
+              <>
+                {message && (
+                  <tr>
+                    <td
+                      colSpan="12"
+                      style={{ textAlign: 'center', fontStyle: 'italic', color: 'red' }}
+                    >
+                      {message}
+                    </td>
+                  </tr>
+                )}
+                {filteredTbms.map((tbm, index) => (
+                  <Tr key={tbm._id}>
+                    <Td style={{ textAlign: 'center' }}>{index + 1}</Td>
+                    <Td style={{ textAlign: 'center' }}>{tbm.assetName}</Td>
+                    <Td style={{ textAlign: 'center' }}>{tbm.location}</Td>
+                    {/* <td style={{ textAlign: 'center' }}>{tbm.assetType}</td> */}
+                    {/* <Td style={{ textAlign: 'center' }}>
                     {new Date(tbm.installationDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    {new Date(tbm.tbmScheduleDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}>{tbm.tbmFrequency}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {new Date(tbm.nextTbmDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}>{tbm.status}</td>
-                  {/* <td style={{ textAlign: 'center' }}>
+                  </Td> */}
+                    <Td style={{ textAlign: 'center' }}>
+                      {new Date(tbm.tbmScheduleDate).toLocaleDateString()}
+                    </Td>
+                    <Td></Td>
+                    <Td style={{ textAlign: 'center' }}>{tbm.tbmFrequency}</Td>
+                    <Td style={{ textAlign: 'center' }}>
+                      {new Date(tbm.nextTbmDate).toLocaleDateString()}
+                    </Td>
+                    <Td style={{ textAlign: 'center' }}>{tbm.status} </Td>
+                    {/* <td style={{ textAlign: 'center' }}>
                     {tbm.qrCode && <img src={tbm.qrCode} alt="QR Code" width={50} height={50} />}
                   </td> */}
-                  <td style={{ textAlign: 'center' }}>
-                    <NavLink to={`/edittbm/${tbm._id}`} style={{ color: '#000080' }}>
-                      <FaEdit />
-                    </NavLink>
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    <button
-                      className="btn"
-                      onClick={() => deleteData(tbm._id)}
-                      style={{ color: 'red' }}
-                    >
-                      <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </>
-          )}
-        </tbody>
-      </CTable>
-      <div>
-        {/* <QrReader
+                    <Td style={{ textAlign: 'center' }}>
+                      <NavLink to={`/edittbm/${tbm._id}`} style={{ color: '#000080' }}>
+                        <FaEdit />
+                      </NavLink>
+                    </Td>
+                    <Td style={{ textAlign: 'center' }}>
+                      <button
+                        className="btn"
+                        onClick={() => deleteData(tbm._id)}
+                        style={{ color: 'red' }}
+                      >
+                        <MdDelete />
+                      </button>
+                    </Td>
+                  </Tr>
+                ))}
+              </>
+            )}
+          </Tbody>
+        </Table>
+        <div>
+          {/* <QrReader
           delay={300}
           onError={handleError}
           onScan={handleScan}
           style={{ width: '300px' }}
         /> */}
-        {scannedData && (
-          <div>
-            <h3>Scanned Data:</h3>
-            <p>{scannedData}</p>
-          </div>
-        )}
+          {scannedData && (
+            <div>
+              <h3>Scanned Data:</h3>
+              <p>{scannedData}</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

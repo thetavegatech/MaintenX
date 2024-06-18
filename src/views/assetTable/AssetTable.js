@@ -5,9 +5,10 @@ import { CTable, CTableHead, CButton } from '@coreui/react'
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import { QrReader } from '@blackbox-vision/react-qr-reader'
-import '../User/user.css'
+import './asset.css'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import { Grid } from '@material-ui/core'
 
 const AssetTable = () => {
   const [assets, setAssets] = useState([])
@@ -85,15 +86,13 @@ const AssetTable = () => {
     <div className="container">
       <NavLink to="/assetForm">
         <CButton
-          // color="dark"
           className="mb-2"
           style={{ marginTop: '5px', margin: '10px', backgroundColor: '#000026' }}
         >
           Add New
         </CButton>
       </NavLink>
-      <CButton
-        // color="info"
+      {/* <CButton
         style={{ marginTop: '5px', margin: '10px', backgroundColor: '#000026' }}
         className="mb-2"
         onClick={() => setShowQrReader(!showQrReader)}
@@ -108,8 +107,8 @@ const AssetTable = () => {
             style={{ width: '100%' }}
           />
         </div>
-      )}
-      <label htmlFor="searchTask" style={{ marginLeft: '70%' }}>
+      )} */}
+      <label htmlFor="searchTask" style={{ marginLeft: '60%' }}>
         <span role="img" aria-label="search-icon"></span>
       </label>
       <input
@@ -124,74 +123,70 @@ const AssetTable = () => {
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      <Table style={{ backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-        <Thead style={{ backgroundColor: '#000026', color: 'white' }}>
-          <Tr style={{ padding: '20px' }}>
-            <Th style={{ textAlign: 'center' }}>Sr No</Th>
-            <Th style={{ textAlign: 'center' }}>Machine Name</Th>
-            <Th style={{ textAlign: 'center' }}>Machine Type</Th>
-            <Th style={{ textAlign: 'center' }}>Location</Th>
-            <Th style={{ textAlign: 'center' }}>QR Code</Th>
-            <Th style={{ textAlign: 'center' }}>Edit</Th>
-            <Th style={{ textAlign: 'center' }}>Delete</Th>
-            {/* <th>Images</th> */}
-          </Tr>
-        </Thead>
-        <Tbody>
-          {loading ? (
+      <div className="table-container">
+        <Table className="custom-table">
+          <Thead>
             <Tr>
-              <Td colSpan="8" style={{ textAlign: 'center' }}>
-                <p>Loading...</p>
-              </Td>
+              <Th>Sr No</Th>
+              <Th>Machine Name</Th>
+              <Th>Machine Type</Th>
+              <Th>Location</Th>
+              <Th>QR Code</Th>
+              <Th>Edit</Th>
+              <Th>Delete</Th>
             </Tr>
-          ) : (
-            <>
-              {message && (
-                <Tr>
-                  <Td
-                    colSpan="8"
-                    style={{ textAlign: 'center', fontStyle: 'italic', color: 'red' }}
-                  >
-                    {message}
-                  </Td>
-                </Tr>
-              )}
-              {filteredAssets.map((asset) => (
-                <Tr key={asset._id}>
-                  <Td style={{ textAlign: 'center' }}>{asset.SrNo}</Td>
-                  <Td style={{ textAlign: 'center' }}>{asset.AssetName}</Td>
-                  <Td style={{ textAlign: 'center' }}>{asset.MachineType}</Td>
-                  <Td style={{ textAlign: 'center' }}>{asset.Location}</Td>
-                  <Td style={{ textAlign: 'center' }}>
-                    {asset.qrCode && (
-                      <img src={asset.qrCode} alt="QR Code" width={50} height={50} />
-                    )}
-                  </Td>
-                  <Td style={{ textAlign: 'center' }}>
-                    <NavLink to={`/editasset/${asset._id}`} style={{ color: '#000080' }}>
-                      <FaEdit />
-                    </NavLink>
-                  </Td>
-                  <Td style={{ textAlign: 'center' }}>
-                    <button
-                      className="btn"
-                      onClick={() => deleteData(asset._id)}
-                      style={{ color: 'red' }}
+          </Thead>
+          <Tbody>
+            {loading ? (
+              <Tr>
+                <Td colSpan="8" style={{ textAlign: 'center' }}>
+                  <p>Loading...</p>
+                </Td>
+              </Tr>
+            ) : (
+              <>
+                {message && (
+                  <Tr>
+                    <Td
+                      colSpan="8"
+                      style={{ textAlign: 'center', fontStyle: 'italic', color: 'red' }}
                     >
-                      <MdDelete />
-                    </button>
-                  </Td>
-                  {/* <td style={{ textAlign: 'center' }}>
-                    <NavLink to={`/assetRecord/${asset._id}`}>
-                      <img src={asset.Image} height={50} width={50} alt="Asset" />
-                    </NavLink>
-                  </td> */}
-                </Tr>
-              ))}
-            </>
-          )}
-        </Tbody>
-      </Table>
+                      {message}
+                    </Td>
+                  </Tr>
+                )}
+                {filteredAssets.map((asset, index) => (
+                  <Tr key={asset._id}>
+                    <Td>{index + 1}</Td>
+                    <Td>{asset.AssetName}</Td>
+                    <Td>{asset.MachineType}</Td>
+                    <Td>{asset.Location}</Td>
+                    <Td>
+                      {asset.qrCode && (
+                        <img src={asset.qrCode} alt="QR Code" width={50} height={50} />
+                      )}
+                    </Td>
+                    <Td>
+                      <NavLink to={`/editasset/${asset._id}`} style={{ color: '#000080' }}>
+                        <FaEdit />
+                      </NavLink>
+                    </Td>
+                    <Td>
+                      <button
+                        className="btn"
+                        onClick={() => deleteData(asset._id)}
+                        style={{ color: 'red' }}
+                      >
+                        <MdDelete />
+                      </button>
+                    </Td>
+                  </Tr>
+                ))}
+              </>
+            )}
+          </Tbody>
+        </Table>
+      </div>
     </div>
   )
 }

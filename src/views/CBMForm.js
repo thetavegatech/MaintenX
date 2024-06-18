@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { addDays, addWeeks, addMonths } from 'date-fns'
+import './form.css'
 
 const CBMForm = () => {
   const [formData, setFormData] = useState({
@@ -112,26 +113,15 @@ const CBMForm = () => {
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        border: '1px solid #ccc',
-        padding: '5px',
-        backgroundColor: '',
-        borderRadius: '10px',
-        boxShadow: '2px 4px 4px rgba(0, 0, 0, 0.1)',
-        height: '50%',
-        width: '100%',
-      }}
-    >
+    <div className="form-container">
       <h4>Create CBM Record</h4>
       <form onSubmit={handleSubmit}>
-        <div className="row g-3">
-          <div className="col-md-4">
+        <div className="form-row">
+          <div className="form-group">
             <label>Asset Name:</label>
             <select
               name="assetName"
-              className="form-control col-sm-6"
+              className="form-control"
               value={formData.assetName}
               onChange={handleChange}
               required
@@ -144,33 +134,32 @@ const CBMForm = () => {
               ))}
             </select>
           </div>
-          <div className="col-md-4">
+          <div className="form-group">
             <label>Location:</label>
             <input
               type="text"
               name="location"
-              className="form-control col-sm-4"
+              className="form-control"
               value={formData.location}
               readOnly
               required
             />
           </div>
-          <div className="col-md-4">
+          <div className="form-group">
             <label>CBM Schedule Date:</label>
             <input
               type="date"
               name="cbmScheduleDate"
-              className="form-control col-sm-6"
+              className="form-control"
               value={formData.cbmScheduleDate}
               onChange={handleChange}
             />
           </div>
-          <div className="col-md-4">
+          <div className="form-group">
             <label>CBM Frequency:</label>
             <select
-              type="text"
               name="cbmFrequency"
-              className="form-control col-sm-6"
+              className="form-control"
               value={formData.cbmFrequency}
               onChange={handleChange}
             >
@@ -183,7 +172,7 @@ const CBMForm = () => {
               <option value="yearly">Yearly</option>
             </select>
           </div>
-          <div className="col-md-4">
+          <div className="form col-md-6">
             <label>Next CBM Date:</label>
             <input
               type="date"
@@ -194,9 +183,11 @@ const CBMForm = () => {
             />
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit-button">
+          Submit
+        </button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="form-message">{message}</p>}
     </div>
   )
 }

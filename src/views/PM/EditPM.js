@@ -75,29 +75,7 @@ export default function EditForm() {
       setTaskDescription(response.data.TaskDescription)
       setAssetCategory(response.data.AssetCategory)
       setLocation(response.data.Location)
-      setManufacturersName(response.data.ManufacturersName)
-      setManufacturersAddress(response.data.ManufacturersAddress)
-      setManufacturersContactNo(response.data.ManufacturersContactNo)
-      setSupplierVendorInformation(response.data.SupplierVendorInformation)
-      setCurrentOwner(response.data.CurrentOwner)
-      setDepartmentResponsible(response.data.DepartmentResponsible)
-      setLocationDepartment(response.data.LocationDepartment)
-      setPhysicalLocation(response.data.PhysicalLocation)
       setCurrentStatus(response.data.CurrentStatus)
-      setExpectedUsefulLife(response.data.ExpectedUsefulLife)
-      setDateofLastMaintenance(response.data.DateofLastMaintenance)
-      setDetailsofMaintenanceActivities(response.data.DetailsofMaintenanceActivities)
-      setScheduledMaintenanceDatesandIntervals(response.data.ScheduledMaintenanceDatesandIntervals)
-      setManufacturersEmail(response.data.ManufacturersEmail)
-      setModelNumber(response.data.ModelNumber)
-      setSerialNumber(response.data.SerialNumber)
-      setPurchaseCost(response.data.PurchaseCost)
-      setPurchaseDate(response.data.PurchaseDate)
-      setWarrantyStartDate(response.data.WarrantyStartDate)
-      setAcquisitionMethod(response.data.AcquisitionMethod)
-      seWarrantyEndDate(response.data.WarrantyEndDate)
-      setWarrantyProviderManufacturerContact(response.data.WarrantyProviderManufacturerContact)
-      setWarrantyTermsandConditions(response.data.WarrantyTermsandConditions)
       setPMDetails(response.data.PMDetails)
       setImage(response.data.Image)
       setstartDate(formatDate(response.data.startDate))
@@ -117,27 +95,7 @@ export default function EditForm() {
         TaskDescription,
         AssetCategory,
         Location,
-        ManufacturersName,
-        ManufacturersAddress,
-        ManufacturersContactNo,
-        ManufacturersEmail,
         ModelNumber,
-        SerialNumber,
-        PurchaseDate,
-        WarrantyStartDate,
-        WarrantyEndDate,
-        PurchaseCost,
-        AcquisitionMethod,
-        WarrantyProviderManufacturerContact,
-        WarrantyTermsandConditions,
-        SupplierVendorInformation,
-        CurrentOwner,
-        DepartmentResponsible,
-        LocationDepartment,
-        PhysicalLocation,
-        CurrentStatus,
-        ExpectedUsefulLife,
-        DateofLastMaintenance,
         DetailsofMaintenanceActivities,
         ScheduledMaintenanceDatesandIntervals,
         PMDetails,

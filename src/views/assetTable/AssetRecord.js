@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
+import './table.css'
 
 const Inventory = () => {
   const { id } = useParams()
@@ -25,7 +26,7 @@ const Inventory = () => {
   useEffect(() => {
     const fetchAssetDetails = async () => {
       try {
-        const response = await axios.get(`https://backendmaintenx.onrender.com/api/assets/${id}`)
+        const response = await axios.get(`http://192.168.1.3:4000/api/assets/${id}`)
         setAssetDetails(response.data)
         setLoading(false)
       } catch (error) {
@@ -41,7 +42,7 @@ const Inventory = () => {
     const fetchPmData = async () => {
       try {
         const response = await axios.get(
-          `https://backendmaintenx.onrender.com/api/pm?assetName=${assetDetails.AssetName}`,
+          `http://192.168.1.3:4000/api/pm?assetName=${assetDetails.AssetName}`,
         )
         setPmData(response.data)
         setLoading(false)
@@ -57,9 +58,7 @@ const Inventory = () => {
   useEffect(() => {
     if (assetDetails.AssetName) {
       axios
-        .get(
-          `https://backendmaintenx.onrender.com/api/breakdown?assetName=${assetDetails.AssetName}`,
-        )
+        .get(`http://192.168.1.3:4000/api/breakdown?assetName=${assetDetails.AssetName}`)
         .then((response) => {
           setSlittingData(response.data)
         })
@@ -95,7 +94,12 @@ const Inventory = () => {
 
   return (
     <>
-      <CNav variant="pills" role="tablist" style={{ marginBottom: '1rem' }}>
+      <CNav
+        variant="pills"
+        role="tablist"
+        className="custom-tabs-nav"
+        // style={{ marginBottom: '1rem' }}
+      >
         <CNavItem role="presentation">
           <CNavLink
             active={activeKey === 1}
@@ -104,59 +108,63 @@ const Inventory = () => {
             aria-controls="home-tab-pane"
             aria-selected={activeKey === 1}
             onClick={() => setActiveKey(1)}
-            style={{ marginLeft: '1rem' }}
+            // style={{ marginLeft: '1rem' }}
+            className="custom-tab-link"
           >
             Asset Data
           </CNavLink>
         </CNavItem>
-        {loggedInUserrole === 'maintenance' ||
-          (loggedInUserrole === 'admin' && (
-            <CNavItem role="presentation">
-              <CNavLink
-                active={activeKey === 2}
-                component="button"
-                role="tab"
-                aria-controls="profile-tab-pane"
-                aria-selected={activeKey === 2}
-                onClick={() => setActiveKey(2)}
-                style={{ marginLeft: '1rem' }}
-              >
-                Breakdown Data
-              </CNavLink>
-            </CNavItem>
-          ))}
-        {loggedInUserrole === 'maintenance' ||
-          (loggedInUserrole === 'admin' && (
-            <CNavItem role="presentation">
-              <CNavLink
-                active={activeKey === 3}
-                component="button"
-                role="tab"
-                aria-controls="contact-tab-pane"
-                aria-selected={activeKey === 3}
-                onClick={() => setActiveKey(3)}
-                style={{ marginLeft: '1rem' }}
-              >
-                PM Data
-              </CNavLink>
-            </CNavItem>
-          ))}
-        {loggedInUserrole === 'production' ||
-          (loggedInUserrole === 'admin' && (
-            <CNavItem role="presentation">
-              <CNavLink
-                active={activeKey === 4}
-                component="button"
-                role="tab"
-                aria-controls="contact-tab-pane"
-                aria-selected={activeKey === 4}
-                onClick={() => setActiveKey(4)}
-                style={{ marginLeft: '1rem' }}
-              >
-                Raise Breakdown
-              </CNavLink>
-            </CNavItem>
-          ))}
+        {/* {loggedInUserrole === 'maintenance' ||
+          (loggedInUserrole === 'admin' && ( */}
+        <CNavItem role="presentation">
+          <CNavLink
+            active={activeKey === 2}
+            component="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+            aria-selected={activeKey === 2}
+            onClick={() => setActiveKey(2)}
+            style={{ marginLeft: '1rem' }}
+            className="custom-tab-link"
+          >
+            Breakdown Data
+          </CNavLink>
+        </CNavItem>
+        {/* ))} */}
+        {/* {loggedInUserrole === 'maintenance' ||
+          (loggedInUserrole === 'admin' && ( */}
+        <CNavItem role="presentation">
+          <CNavLink
+            active={activeKey === 3}
+            component="button"
+            role="tab"
+            aria-controls="contact-tab-pane"
+            aria-selected={activeKey === 3}
+            onClick={() => setActiveKey(3)}
+            style={{ marginLeft: '1rem' }}
+            className="custom-tab-link"
+          >
+            PM Data
+          </CNavLink>
+        </CNavItem>
+        {/* ))} */}
+        {/* {loggedInUserrole === 'production' ||
+          (loggedInUserrole === 'admin' && ( */}
+        <CNavItem role="presentation">
+          <CNavLink
+            active={activeKey === 4}
+            component="button"
+            role="tab"
+            aria-controls="contact-tab-pane"
+            aria-selected={activeKey === 4}
+            onClick={() => setActiveKey(4)}
+            style={{ marginLeft: '1rem' }}
+            className="custom-tab-link"
+          >
+            Raise Breakdown
+          </CNavLink>
+        </CNavItem>
+        {/* ))} */}
       </CNav>
       <CTabContent>
         <CTabPane role="tabpanel" aria-labelledby="home-tab-pane" visible={activeKey === 1}>
@@ -206,40 +214,47 @@ const BreakdownData = ({ assetName, breakdownData }) => {
   return (
     <div>
       <h5>{assetName} Breakdown</h5>
-      {filteredData.length > 0 ? (
-        <>
-          {filteredData.map((item) => (
-            <div key={item._id} style={{ marginBottom: '1rem' }}>
-              <p>
-                <strong>Machine Name:</strong> {item.MachineName}
-              </p>
-              <p>
-                <strong>Line Name:</strong> {item.LineName}
-              </p>
-              <p>
-                <strong>Operations:</strong> {item.Operations}
-              </p>
-              <p>
-                <strong>Location:</strong> {item.Location}
-              </p>
-              <p>
-                <strong>Breakdown Start Date:</strong> {item.BreakdownStartDate}
-              </p>
-              <p>
-                <strong>Breakdown End Date:</strong> {item.BreakdownEndDate}
-              </p>
-              <p>
-                <strong>Status:</strong> {item.Status}
-              </p>
-              <CButton color="primary" onClick={() => handleProductionPageNavigation(item._id)}>
-                Go to Production Page
-              </CButton>
-            </div>
-          ))}
-        </>
-      ) : (
-        <p>No breakdown data available for {assetName}.</p>
-      )}
+      <div className="table-responsive">
+        <table className="table table-bordered table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Machine Name</th>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Line Name</th>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Operations</th>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Location</th>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Breakdown Start Date</th>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Breakdown End Date</th>
+              <th style={{ backgroundColor: '#002244', color: 'white' }}>Status</th>
+              <th style={{ textAlign: 'center' }}>Edit </th>
+              <th style={{ textAlign: 'center' }}>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((item) => (
+              <tr key={item._id}>
+                <td>{item.MachineName}</td>
+                <td>{item.LineName}</td>
+                <td>{item.Operations}</td>
+                <td>{item.Location}</td>
+                <td>{item.BreakdownStartDate}</td>
+                <td>{item.BreakdownEndDate}</td>
+                <td>{item.Status}</td>
+                <td style={{ textAlign: 'center' }}>
+                  <NavLink to={`/productionBD/${item._id}`} style={{ color: '#000080' }}>
+                    <FaEdit />
+                  </NavLink>
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  <button className="btn" style={{ color: 'red' }}>
+                    {/* <img src={dlt} alt="" width={30} height={30} /> */}
+                    <MdDelete />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
@@ -252,7 +267,7 @@ const PMData = ({ assetName, pmData }) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this data?')
     if (isConfirmed) {
       axios
-        .delete(`https://backendmaintenx.onrender.com/api/pm/${id}`)
+        .delete(`http://192.168.1.3:4000/api/pm/${id}`)
         .then((response) => {
           console.log('Data deleted:', response.data)
 
@@ -290,44 +305,8 @@ const PMData = ({ assetName, pmData }) => {
   return (
     <div>
       <h5>{assetName} PM Data</h5>
-      {filteredData.length > 0 ? (
-        <>
-          {filteredData.map((item) => (
-            <div key={item._id} style={{ marginBottom: '1rem' }}>
-              <p>
-                <strong>Machine Name:</strong> {item.AssetName}
-              </p>
-              <p>
-                <strong>Location:</strong> {item.Location}
-              </p>
-              <p>
-                <strong>TaskName:</strong> {item.TaskName}
-              </p>
-              <p>
-                <strong>TaskDescription:</strong> {item.TaskDescription}
-              </p>
-              <p>
-                <strong>ScheduledMaintenanceDatesandIntervals:</strong>{' '}
-                {item.ScheduledMaintenanceDatesandIntervals}
-              </p>
-              <p>
-                <strong>startDate:</strong> {item.startDate}
-              </p>
-              <p>
-                <strong>nextDate:</strong> {item.nextDate}
-              </p>
-              {/* <CButton color="primary" onClick={() => handleProductionPageNavigation(item._id)}>
-                Go to Production Page
-              </CButton> */}
-            </div>
-          ))}
-        </>
-      ) : (
-        <p>No breakdown data available for {assetName}.</p>
-      )}
 
       <div className="table-responsive">
-        <h5>All PM Data</h5>
         <table className="table table-bordered table-hover">
           <thead className="table-dark">
             <tr>
@@ -374,11 +353,12 @@ const PMData = ({ assetName, pmData }) => {
   )
 }
 
-const Breakdown = (assetName) => {
+const Breakdown = ({ assetName }) => {
   const [usernos, setUsers] = useState([])
   const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate()
   const [selectedUsers, setSelectedUsers] = useState([])
+  // const filteredData = breakdown.filter((item) => item.MachineName === assetName)
 
   const handleChange = (e) => {
     setFormData({
@@ -388,7 +368,7 @@ const Breakdown = (assetName) => {
   }
 
   const [formData, setFormData] = useState({
-    MachineName: '',
+    MachineName: assetName,
     BreakdownStartDate: '',
     BreakdownEndDate: '',
     BreakdownStartTime: '',
@@ -429,7 +409,7 @@ const Breakdown = (assetName) => {
   const username = useSelector((state) => state.auth.userInfo?.name)
 
   const apiKey = 'NDE1MDY2NGM2Mzc3NTI0ZjQzNmE1YTM5NDY0YzZlNzU='
-  const numbers = '7020804148' // Replace with the phone numbers
+  const numbers = '6020804148' // Replace with the phone numbers
   const data1 = 'test'
   const data2 = 'test'
   const sender = 'AAABRD'
@@ -529,7 +509,7 @@ const Breakdown = (assetName) => {
       setSuccessMessage('')
     }, 5000)
 
-    fetch('https://backendmaintenx.onrender.com/api/breakdown', {
+    fetch('http://192.168.1.3:4000/api/breakdown', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -808,7 +788,7 @@ PMData.propTypes = {
   ).isRequired,
 }
 
-Breakdown.prototype = {
+Breakdown.propTypes = {
   assetName: PropTypes.string.isRequired,
   Breakdown: PropTypes.string.isRequired,
 }

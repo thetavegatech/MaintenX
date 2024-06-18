@@ -78,7 +78,9 @@ const CBMEdit = () => {
 
     if (name === 'assetName') {
       try {
-        const response = await axios.get(`http://localhost:4000/api/locations/${value}`)
+        const response = await axios.get(
+          `https://backendmaintenx.onrender.com/api/locations/${value}`,
+        )
         if (response.data && response.data.Location) {
           updatedFormData = {
             ...updatedFormData,

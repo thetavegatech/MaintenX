@@ -11,7 +11,10 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
+import '../assetTable/asset.css'
 import loadingGif from '../assetTable/loader.gif'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 class BDList extends React.Component {
   state = {
@@ -114,7 +117,7 @@ class BDList extends React.Component {
               fontSize: '16px',
               fontWeight: 'bold',
               whiteSpace: 'nowrap',
-              '@media (max-width: 750px)': {
+              '@media (max-width: 650px)': {
                 // marginLeft: '3rem',
                 // marginRight: '0.8rem',
                 fontSize: '14px',
@@ -133,13 +136,14 @@ class BDList extends React.Component {
               borderRadius: '5px',
               border: '1px solid #ccc',
               marginRight: '10px',
+              marginLeft: '40px',
               fontSize: '14px',
             }}
           />
           <label
             htmlFor="endDate"
             style={{
-              marginRight: '0.2rem',
+              marginRight: '30px',
               fontSize: '16px',
               fontWeight: 'bold',
               whiteSpace: 'nowrap',
@@ -172,7 +176,7 @@ class BDList extends React.Component {
             onChange={this.handleSearchChange}
             style={{
               display: 'flex',
-              marginBottom: '0%',
+              marginBottom: '10px',
               padding: '8px',
               border: '1px solid',
               borderRadius: '4px',
@@ -189,47 +193,24 @@ class BDList extends React.Component {
             <option value="Plant 3">Plant 3</option>
             {/* <option value="Plant 1, Plant 2, Plant 3">Search </option> */}
           </select>
-          <div className="table-responsive-sm">
-            <CTable
-              bordered
-              striped
-              hover
-              responsive
-              style={{
-                marginTop: '20px',
-                borderCollapse: 'collapse',
-                width: '100%',
-              }}
-            >
-              <CTableHead color="dark">
-                <CTableRow>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
+          <div className="table-container">
+            <Table className="custom-table">
+              <Thead style={{ backgroundColor: '#000026', color: 'white' }}>
+                <Tr>
+                  <Th style={{ textAlign: 'center', color: 'white', height: '40px' }}>
                     Machine Name
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    BreakDown Start Date
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    Shift
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    Location
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    Line Name
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    Operations
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    Status
-                  </CTableHeaderCell>
-                  <CTableHeaderCell style={{ textAlign: 'center', color: 'white' }}>
-                    Edit
-                  </CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
+                  </Th>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>BreakDown Start Date</Th>
+                  <Td></Td>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>Shift</Th>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>Location</Th>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>Line Name</Th>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>Operations</Th>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>Status</Th>
+                  <Th style={{ textAlign: 'center', color: 'white' }}>Edit</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
                 {loading ? ( // Show loader when loading is true
                   <tr>
                     <td colSpan="8" style={{ textAlign: 'center' }}>
@@ -241,52 +222,41 @@ class BDList extends React.Component {
                 ) : (
                   <>
                     {this.state.message && (
-                      <CTableRow>
+                      <Tr>
                         <CTableDataCell colSpan="8" style={{ textAlign: 'center' }}>
                           {this.state.message}
                         </CTableDataCell>
-                      </CTableRow>
+                      </Tr>
                     )}
                     {(this.state.searchQuery
                       ? filteredAssets.filter((breakdown) => openBreakdowns.includes(breakdown))
                       : validatedAssets.filter((breakdown) => openBreakdowns.includes(breakdown))
                     ).map((breakdown) => (
-                      <CTableRow key={breakdown._id}>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.MachineName}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.BreakdownStartDate}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.Shift}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.Location}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.LineName}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.Operations}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
-                          {breakdown.Status}
-                        </CTableDataCell>
-                        <CTableDataCell style={{ textAlign: 'center' }}>
+                      <Tr key={breakdown._id}>
+                        <Td style={{ textAlign: 'center' }}>{breakdown.MachineName}</Td>
+                        <Td style={{ textAlign: 'center' }}>
+                          {new Date(breakdown.BreakdownStartDate).toISOString().split('T')[0]}
+                        </Td>
+                        <Td></Td>
+                        <Td style={{ textAlign: 'center' }}>{breakdown.Shift}</Td>
+                        <Td style={{ textAlign: 'center' }}>{breakdown.Location}</Td>
+                        <Td style={{ textAlign: 'center' }}>{breakdown.LineName}</Td>
+                        <Td style={{ textAlign: 'center' }}>{breakdown.Operations}</Td>
+                        <Td style={{ textAlign: 'center' }}>{breakdown.Status}</Td>
+                        <Td style={{ textAlign: 'center' }}>
                           <NavLink
                             to={`/productionBD/${breakdown._id}`}
                             style={{ color: '#000080' }}
                           >
                             <FaEdit />
                           </NavLink>
-                        </CTableDataCell>
-                      </CTableRow>
+                        </Td>
+                      </Tr>
                     ))}
                   </>
                 )}
-              </CTableBody>
-            </CTable>
+              </Tbody>
+            </Table>
           </div>
         </div>
       </>

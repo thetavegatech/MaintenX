@@ -78,7 +78,9 @@ const CBMEdit = () => {
 
     if (name === 'assetName') {
       try {
-        const response = await axios.get(`http://localhost:4000/api/locations/${value}`)
+        const response = await axios.get(
+          `https://backendmaintenx.onrender.com/api/locations/${value}`,
+        )
         if (response.data && response.data.Location) {
           updatedFormData = {
             ...updatedFormData,
@@ -126,7 +128,7 @@ const CBMEdit = () => {
         width: '100%',
       }}
     >
-      <h4>Edit CBM Record</h4>
+      <h4>Edit TBM Record</h4>
       <form onSubmit={handleSubmit}>
         <div className="row g-3">
           <div className="col-md-4">

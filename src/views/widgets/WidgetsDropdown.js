@@ -236,7 +236,7 @@ const WidgetsDropdown = () => {
   return (
     <CRow>
       <CCol sm={6} lg={3}>
-        <div className="custom-widget primary">
+        <div className="custom-widget primary custom-card">
           <div className="icon">
             <CIcon icon={cilGraph} size="3xl" />
           </div>
@@ -257,7 +257,7 @@ const WidgetsDropdown = () => {
         </div>
       </CCol>
       <CCol sm={6} lg={3}>
-        <div className="custom-widget info">
+        <div className="custom-widget info custom-card">
           <div className="icon">
             <CIcon icon={cilStorage} size="3xl" />
           </div>
@@ -278,7 +278,7 @@ const WidgetsDropdown = () => {
         </div>
       </CCol>
       <CCol sm={6} lg={3}>
-        <div className="custom-widget warning">
+        <div className="custom-widget warning custom-card">
           <div className="icon">
             <CIcon icon={cilTask} size="3xl" />
           </div>
@@ -299,7 +299,7 @@ const WidgetsDropdown = () => {
         </div>
       </CCol>
       <CCol sm={6} lg={3}>
-        <div className="custom-widget danger">
+        <div className="custom-widget danger custom-card">
           <div className="icon">
             <CIcon icon={cilCheckCircle} size="3xl" />
           </div>

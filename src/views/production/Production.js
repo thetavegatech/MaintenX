@@ -16,6 +16,9 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
+import '../assetTable/asset.css'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 class BDList extends React.Component {
   state = {
@@ -210,13 +213,14 @@ class BDList extends React.Component {
                 borderRadius: '5px',
                 border: '1px solid #ccc',
                 marginRight: '10px',
+                marginLeft: '10px',
                 fontSize: '14px',
               }}
             />
             <label
               htmlFor="endDate"
               style={{
-                marginRight: 'px',
+                marginRight: '30px',
                 fontSize: '16px',
                 fontWeight: 'bold',
                 whiteSpace: 'nowrap',
@@ -246,7 +250,7 @@ class BDList extends React.Component {
               onChange={this.handleSearchChange}
               style={{
                 // marginLeft: '70%',
-                marginBottom: '10px',
+                marginBottom: '20px',
                 padding: '8px',
                 border: '1px solid',
                 borderRadius: '4px',
@@ -264,78 +268,70 @@ class BDList extends React.Component {
               <option value=" DPAPL- GN"> DPAPL- GN</option>
             </select>
           </div>
-          <CTable bordered striped hover responsive>
-            <CTableHead color="dark">
-              <CTableRow>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Machine Code</CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>
-                  BreakDown Start Date
-                </CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Breakdown Type</CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Location</CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Line Name</CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Remark</CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Status</CTableHeaderCell>
-                <CTableHeaderCell style={{ textAlign: 'center' }}>Edit</CTableHeaderCell>
-                {/* <CTableHeaderCell style={{ textAlign: 'center' }}>excel</CTableHeaderCell> */}
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {this.state.message && (
-                <CTableRow>
-                  <CTableDataCell colSpan="8">{this.state.message}</CTableDataCell>
-                </CTableRow>
-              )}
-              {(this.state.searchQuery
-                ? filteredAssets.filter((breakdown) => openBreakdowns.includes(breakdown))
-                : validatedAssets.filter((breakdown) => openBreakdowns.includes(breakdown))
-              ).map((breakdown) => (
-                <CTableRow key={breakdown._id}>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {breakdown.MachineName}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {' '}
-                    {new Date(breakdown.Date).toLocaleDateString()}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {breakdown.BreakdownType}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {breakdown.Location}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {breakdown.LineName}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {breakdown.Remark}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    {breakdown.Status}
-                  </CTableDataCell>
-                  <CTableDataCell style={{ textAlign: 'center' }}>
-                    <NavLink to={`/pbdStatus/${breakdown._id}`} style={{ color: '#000080' }}>
-                      <FaEdit />
-                    </NavLink>
-                  </CTableDataCell>
-                  {/* <CButton
+          <div className="table-container">
+            <Table className="custom-table">
+              <Thead>
+                <Tr>
+                  <Th style={{ textAlign: 'center', height: '40px' }}>Machine Code</Th>
+                  <Th style={{ textAlign: 'center' }}>BreakDown Start Date</Th>
+                  <Th></Th>
+                  <Th style={{ textAlign: 'center' }}>Breakdown Type</Th>
+                  {/* <Th></Th> */}
+                  <Th style={{ textAlign: 'center' }}>Location</Th>
+                  <Th style={{ textAlign: 'center' }}>Line Name</Th>
+                  <Th style={{ textAlign: 'center' }}>Remark</Th>
+                  <Th style={{ textAlign: 'center' }}>Status</Th>
+                  <Th style={{ textAlign: 'center' }}>Edit</Th>
+                  {/* <CTableHeaderCell style={{ textAlign: 'center' }}>excel</CTableHeaderCell> */}
+                </Tr>
+              </Thead>
+              <Tbody>
+                {this.state.message && (
+                  <Tr>
+                    <Td colSpan="8">{this.state.message}</Td>
+                  </Tr>
+                )}
+                {(this.state.searchQuery
+                  ? filteredAssets.filter((breakdown) => openBreakdowns.includes(breakdown))
+                  : validatedAssets.filter((breakdown) => openBreakdowns.includes(breakdown))
+                ).map((breakdown) => (
+                  <Tr key={breakdown._id}>
+                    <Td style={{ textAlign: 'center' }}>{breakdown.MachineName}</Td>
+                    <Td style={{ textAlign: 'center' }}>
+                      {' '}
+                      {new Date(breakdown.Date).toLocaleDateString()}
+                    </Td>
+                    <Td></Td>
+                    <Td style={{ textAlign: 'center' }}>{breakdown.BreakdownType}</Td>
+                    {/* <Td></Td> */}
+                    <Td style={{ textAlign: 'center' }}>{breakdown.Location}</Td>
+                    <Td style={{ textAlign: 'center' }}>{breakdown.LineName}</Td>
+                    <Td style={{ textAlign: 'center' }}>{breakdown.Remark}</Td>
+                    <Td style={{ textAlign: 'center' }}>{breakdown.Status}</Td>
+                    <Td style={{ textAlign: 'center' }}>
+                      <NavLink to={`/pbdStatus/${breakdown._id}`} style={{ color: '#000080' }}>
+                        <FaEdit />
+                      </NavLink>
+                    </Td>
+                    {/* <CButton
                     type="button"
                     style={{ margin: '1rem', backgroundColor: 'grey' }}
                     onClick={this.exportToExcel}
                   >
                     Export to Excel
                   </CButton> */}
-                </CTableRow>
-              ))}
-            </CTableBody>
-          </CTable>
-          {loading && (
-            <div className="loader-container">
-              {/* <div className="loader">Loading...</div> */}
-              <CSpinner color="primary" />
-              <div className="loader">Loading...</div>
-            </div>
-          )}
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+            {loading && (
+              <div className="loader-container">
+                {/* <div className="loader">Loading...</div> */}
+                <CSpinner color="primary" />
+                <div className="loader">Loading...</div>
+              </div>
+            )}
+          </div>
         </div>
       </>
     )

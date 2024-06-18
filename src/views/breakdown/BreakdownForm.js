@@ -24,7 +24,7 @@ export default function BreakDown() {
   useEffect(() => {
     // Fetch user data from the server
     axios
-      .get('http://192.168.1.17:5000/UserInfo')
+      .get('http://192.168.1.3:5000/UserInfo')
       .then((response) => {
         setUsers(response.data)
       })
@@ -139,7 +139,7 @@ export default function BreakDown() {
   // }
 
   useEffect(() => {
-    // Fetch asset names from 'http://192.168.1.17:5000/getAllData'
+    // Fetch asset names from 'http://192.168.1.16:5000/getAllData'
     fetch('https://backendmaintenx.onrender.com/api/assets')
       .then((res) => res.json())
       .then((data) => {
@@ -258,7 +258,7 @@ export default function BreakDown() {
   const username = useSelector((state) => state.auth.userInfo?.name)
 
   const apiKey = 'NDE1MDY2NGM2Mzc3NTI0ZjQzNmE1YTM5NDY0YzZlNzU='
-  const numbers = '7020804148' // Replace with the phone numbers
+  const numbers = '6020804148' // Replace with the phone numbers
   const data1 = 'test'
   const data2 = 'test'
   const sender = 'AAABRD'
@@ -467,7 +467,7 @@ export default function BreakDown() {
                 placeholder=""
               />
             </div>
-            <div className="row lg-2">
+            {/* <div className="row lg-2">
               <div className="col-md-6" style={{ marginTop: '2vh', overflowY: 'auto' }}>
                 <label style={{ marginBottom: '10px' }}>Select users:</label>
                 <div className="row">
@@ -490,7 +490,6 @@ export default function BreakDown() {
                           </label>
                         </div>
                       </div>
-                      {/* Insert a new row after every two users */}
                       {index % 2 !== 0 && <div className="w-100"></div>}
                     </React.Fragment>
                   ))}
@@ -525,6 +524,21 @@ export default function BreakDown() {
                   Submit
                 </button>
               </div>
+            </div> */}
+            <div className="col-xs-12">
+              <button
+                type="submit"
+                onClick={handleButtonClick}
+                className="btn btn-primary"
+                style={{
+                  marginTop: '20px',
+                  fontSize: '16px',
+                  backgroundColor: '#3448db',
+                  marginBottom: '10px',
+                }}
+              >
+                Submit
+              </button>
             </div>
             {/* </div> */}
           </div>

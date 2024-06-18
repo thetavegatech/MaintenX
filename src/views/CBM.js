@@ -3,7 +3,10 @@ import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import { CTable, CTableHead, CButton } from '@coreui/react'
 import { MdDelete } from 'react-icons/md'
+import './assetTable/asset.css'
 import { FaEdit } from 'react-icons/fa'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const AssetTable = () => {
   const [cbms, setCbms] = useState([])
@@ -175,83 +178,83 @@ const AssetTable = () => {
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      <CTable bordered striped hover responsive>
-        <CTableHead color="dark">
-          <tr>
-            <th style={{ textAlign: 'center' }}>Sr No</th>
-            <th style={{ textAlign: 'center' }}>Asset Name</th>
-            <th style={{ textAlign: 'center' }}>Location</th>
-            <th style={{ textAlign: 'center' }}>Installation Date</th>
-            <th style={{ textAlign: 'center' }}>CBM Schedule Date</th>
-            <th style={{ textAlign: 'center' }}>CBM Frequency</th>
-            <th style={{ textAlign: 'center' }}>Next CBM Date</th>
-            <th style={{ textAlign: 'center' }}>Status</th>
-            <th style={{ textAlign: 'center' }}>Edit</th>
-            <th style={{ textAlign: 'center' }}>Delete</th>
-          </tr>
-        </CTableHead>
-        <tbody>
-          {loading ? (
-            <tr>
-              <td colSpan="12" style={{ textAlign: 'center' }}>
-                <p>Loading...</p>
-              </td>
-            </tr>
-          ) : (
-            <>
-              {message && (
-                <tr>
-                  <td
-                    colSpan="12"
-                    style={{ textAlign: 'center', fontStyle: 'italic', color: 'red' }}
-                  >
-                    {message}
-                  </td>
-                </tr>
-              )}
-              {filteredCbms.map((cbm, index) => (
-                <tr key={cbm._id}>
-                  <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                  <td style={{ textAlign: 'center' }}>{cbm.assetName}</td>
-                  <td style={{ textAlign: 'center' }}>{cbm.location}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {new Date(cbm.installationDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    {new Date(cbm.cbmScheduleDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}>{cbm.cbmFrequency}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {new Date(cbm.nextCbmDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}>{cbm.status}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <NavLink to={`/editcbm/${cbm._id}`} style={{ color: '#000080' }}>
-                      <FaEdit />
-                    </NavLink>
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    <button
-                      className="btn"
-                      onClick={() => deleteData(cbm._id)}
-                      style={{ color: 'red' }}
+      <div className="table-container">
+        <Table className="custom-table">
+          <Thead>
+            <Tr>
+              <Th>Sr No</Th>
+              <Th>Asset Name</Th>
+              <Th>Location</Th>
+              {/* <Th style={{ textAlign: 'center' }}>Installation Date</Th> */}
+              <Th>CBM Schedule Date</Th>
+              <Th></Th>
+              <Th>CBM Frequency</Th>
+              <Th>Next CBM</Th>
+              <Th>Status</Th>
+              <Th>Edit</Th>
+              <Th>Delete</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="12" style={{ textAlign: 'center' }}>
+                  <p>Loading...</p>
+                </td>
+              </tr>
+            ) : (
+              <>
+                {message && (
+                  <tr>
+                    <td
+                      colSpan="12"
+                      style={{ textAlign: 'center', fontStyle: 'italic', color: 'red' }}
                     >
-                      <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </>
+                      {message}
+                    </td>
+                  </tr>
+                )}
+                {filteredCbms.map((cbm, index) => (
+                  <Tr key={cbm._id}>
+                    <Td>{index + 1}</Td>
+                    <Td>{cbm.assetName}</Td>
+                    <Td>{cbm.location}</Td>
+                    {/* <Td style={{ textAlign: 'center' }}>
+                    {new Date(cbm.installationDate).toLocaleDateString()}
+                  </Td> */}
+                    <Td>{new Date(cbm.cbmScheduleDate).toLocaleDateString()}</Td>
+                    <Td></Td>
+                    <Td>{cbm.cbmFrequency}</Td>
+                    <Td>{new Date(cbm.nextCbmDate).toLocaleDateString()}</Td>
+                    <Td>{cbm.status}</Td>
+                    <Td>
+                      <NavLink to={`/editcbm/${cbm._id}`} style={{ color: '#000080' }}>
+                        <FaEdit />
+                      </NavLink>
+                    </Td>
+                    <Td>
+                      <button
+                        className="btn"
+                        onClick={() => deleteData(cbm._id)}
+                        style={{ color: 'red' }}
+                      >
+                        <MdDelete />
+                      </button>
+                    </Td>
+                  </Tr>
+                ))}
+              </>
+            )}
+          </Tbody>
+        </Table>
+        <div>
+          {scannedData && (
+            <div>
+              <h3>Scanned Data:</h3>
+              <p>{scannedData}</p>
+            </div>
           )}
-        </tbody>
-      </CTable>
-      <div>
-        {scannedData && (
-          <div>
-            <h3>Scanned Data:</h3>
-            <p>{scannedData}</p>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   )
